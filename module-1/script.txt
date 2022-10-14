@@ -1,0 +1,24 @@
+pipeline {
+    agent any
+    tools {
+       terraform 'terraform-12'
+    }
+    stages {
+        stage('Git checkout') {
+           steps{
+                git branch: 'main', credentialsId: 'Github', url: 'https://github.com/ayushrai-deloitte/mod1-anthos.git/'
+            }
+        }
+        stage('terraform Init') {
+            steps{
+                sh 'terraform init'
+            }
+        }
+        stage('terraform apply') {
+            steps{
+                sh 'terraform apply --auto-approve'
+            }
+        }
+    }
+    
+}
